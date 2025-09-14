@@ -7,43 +7,24 @@
     <style>
         body, html {
             margin: 0; padding: 0; width: 100%; height: 100%;
-            /* overflow: hidden; */
-            background-color: #000;
+            overflow: hidden; background-color: #000;
         }
         #responsive-image {
             width: 100vw; height: 100vh; object-fit: cover;
         }
-        
-        /* 버튼들을 담는 컨테이너 스타일 */
         #button-container {
-            position: fixed;
-            right: 25px;
-            bottom: 25px;
-            z-index: 10;
-            display: flex;
-            gap: 10px; /* 버튼 사이의 간격 */
+            position: fixed; right: 25px; bottom: 25px;
+            z-index: 10; display: flex; gap: 10px;
         }
-
-        /* 공통 버튼 스타일 */
         .action-button {
-            background-color: rgba(255, 255, 255, 0.9);
-            color: #333;
-            padding: 10px 18px;
-            border-radius: 50px;
-            text-decoration: none;
+            background-color: rgba(255, 255, 255, 0.9); color: #333;
+            padding: 10px 18px; border-radius: 50px; text-decoration: none;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            font-weight: 600;
-            font-size: 16px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-            display: flex;
-            align-items: center;
-            cursor: pointer; /* 클릭 가능함을 표시 */
-            border: none;
+            font-weight: 600; font-size: 16px; box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            display: flex; align-items: center; cursor: pointer; border: none;
         }
-        
         .action-button img {
-            width: 20px;
-            margin-right: 8px;
+            width: 20px; margin-right: 8px;
         }
     </style>
 </head>
@@ -52,7 +33,7 @@
     <img id="responsive-image" src="images/redirect_pc.png" alt="2025년 12월, PenFix가 찾아옵니다">
 
     <div id="button-container">
-        <a class="action-button" href="mailto:support@penfix.com?subject=PenFix%20문의드립니다&body=문의하실%20내용을%20자유롭게%20작성해주세요.">
+        <a class="action-button" id="contact-button" target="_blank">
             <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg" alt="Gmail Icon">
             문의하기
         </a>
@@ -63,8 +44,14 @@
 
     <script>
         window.onload = function() {
-            // --- 기존 기기 감지 코드 ---
+            // --- 1. 기본 설정 ---
+            const contactButton = document.getElementById('contact-button');
             const imageElement = document.getElementById('responsive-image');
+            const email = 'admin@penfix.kr'; // 문의받을 이메일 주소
+            const subject = 'PenFix 문의드립니다';
+            const body = '문의하실 내용을 자유롭게 작성해주세요.';
+            
+            // --- 2. 기기 감지 및 이미지 변경 ---
             const isMobile = /Mobi|Android|iPhone/i.test(navigator.userAgent);
             if (isMobile) {
                 imageElement.src = 'images/redirect_mobile.png';
@@ -72,21 +59,23 @@
                 imageElement.src = 'images/redirect_pc.png';
             }
 
-            // --- 새로 추가된 이메일 복사 코드 ---
-            const copyButton = document.getElementById('copy-email-button');
-            const emailToCopy = 'support@penfix.com'; // 여기에 본인 이메일 주소 입력
+            // --- 3. '문의하기' 버튼 링크 설정 (PC와 모바일 다르게) ---
+            if (isMobile) {
+                // 모바일이면 mailto: (앱 실행)
+                contactButton.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            } else {
+                // PC면 Gmail 새 탭 링크
+                contactButton.href = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            }
 
+            // --- 4. 이메일 복사 버튼 기능 ---
+            const copyButton = document.getElementById('copy-email-button');
             copyButton.onclick = function() {
-                navigator.clipboard.writeText(emailToCopy).then(function() {
-                    // 성공적으로 복사되었을 때
+                navigator.clipboard.writeText(email).then(function() {
                     copyButton.innerText = '복사 완료!';
-                    // 2초 후에 원래 텍스트로 되돌리기
                     setTimeout(function() {
                         copyButton.innerText = '이메일 복사';
                     }, 2000);
-                }, function(err) {
-                    // 복사 실패 시 (거의 발생하지 않음)
-                    alert('이메일 복사에 실패했습니다.');
                 });
             };
         };
