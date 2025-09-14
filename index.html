@@ -7,7 +7,8 @@
     <style>
         body, html {
             margin: 0; padding: 0; width: 100%; height: 100%;
-            overflow: hidden; background-color: #000;
+            /* overflow: hidden; */
+            background-color: #000;
         }
         #responsive-image {
             width: 100vw; height: 100vh; object-fit: cover;
@@ -48,7 +49,7 @@
 </head>
 <body>
 
-    <img id="responsive-image" src="redirect_pc.jpg" alt="2025년 12월, PenFix가 찾아옵니다">
+    <img id="responsive-image" src="images/redirect_pc.png" alt="2025년 12월, PenFix가 찾아옵니다">
 
     <div id="button-container">
         <a class="action-button" href="mailto:support@penfix.com?subject=PenFix%20문의드립니다&body=문의하실%20내용을%20자유롭게%20작성해주세요.">
@@ -66,9 +67,9 @@
             const imageElement = document.getElementById('responsive-image');
             const isMobile = /Mobi|Android|iPhone/i.test(navigator.userAgent);
             if (isMobile) {
-                imageElement.src = 'redirect_mobile.jpg';
+                imageElement.src = 'images/redirect_mobile.png';
             } else {
-                imageElement.src = 'redirect_pc.jpg';
+                imageElement.src = 'images/redirect_pc.png';
             }
 
             // --- 새로 추가된 이메일 복사 코드 ---
