@@ -31,7 +31,7 @@
 </head>
 <body>
 
-    <img id="responsive-image" src="images/redirect_pc.png" alt="2025년 12월, PenFix가 찾아옵니다">
+    <img id="responsive-image" src="images/redirect_pc_v2.png" alt="2025년 12월, PenFix가 찾아옵니다">
 
     <div id="button-container">
         <a class="action-button" id="contact-button" target="_blank">
@@ -55,9 +55,9 @@
             // --- 2. 기기 감지 및 이미지 변경 ---
             const isMobile = /Mobi|Android|iPhone/i.test(navigator.userAgent);
             if (isMobile) {
-                imageElement.src = 'images/redirect_mobile.png';
+                imageElement.src = 'images/redirect_mobile_v2.png';
             } else {
-                imageElement.src = 'images/redirect_pc.png';
+                imageElement.src = 'images/redirect_pc_v2.png';
             }
 
             // --- 3. '문의하기' 버튼 링크 설정 (PC와 모바일 다르게) ---
